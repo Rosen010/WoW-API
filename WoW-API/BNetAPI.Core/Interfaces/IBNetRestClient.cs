@@ -1,7 +1,4 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
-
-namespace BNet.RestAPI.Interfaces
+﻿namespace BNetAPI.Core.Interfaces
 {
     public interface IBNetRestClient
     {

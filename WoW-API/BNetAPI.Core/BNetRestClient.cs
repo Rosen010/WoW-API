@@ -1,7 +1,5 @@
-﻿using BNet.RestAPI.Interfaces;
+﻿using BNetAPI.Core.Interfaces;
 using Newtonsoft.Json;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace BNet.RestAPI
 {
