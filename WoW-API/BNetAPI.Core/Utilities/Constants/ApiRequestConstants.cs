@@ -1,6 +1,6 @@
 ﻿namespace BNetAPI.Core.Utilities.Constants
 {
-    internal static class ApiRequestConstants
+    public static class ApiRequestConstants
     {
         public static class Headers
         {

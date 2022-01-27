@@ -1,6 +1,6 @@
 ﻿namespace BNetAPI.Core.Utilities.Constants
 {
-    internal static class Endpoints
+    public static class Endpoints
     {
         public const string BNetOauth = "https://us.battle.net/oauth/token";
 
