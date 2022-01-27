@@ -1,0 +1,23 @@
+﻿using BNetAPI.Guilds.Models.ResponseModels.ResponseComponents;
+using Newtonsoft.Json;
+
+namespace BNetAPI.Guilds.Models.ResponseModels
+{
+    public class GuildResponse
+    {
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("member_count")]
+        public int MembersCount { get; set; }
+
+        [JsonProperty("realm")]
+        public RealmComponent Realm { get; set; }
+
+        [JsonProperty("roster")]
+        public RosterComponent RosterUrl { get; set; }
+
+        [JsonProperty("created_timestamp")]
+        public long CreatedOn { get; set; }
+    }
+}
