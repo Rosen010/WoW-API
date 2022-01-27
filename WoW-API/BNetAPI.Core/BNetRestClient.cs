@@ -1,7 +1,7 @@
 ﻿using BNetAPI.Core.Interfaces;
 using Newtonsoft.Json;
 
-namespace BNet.RestAPI
+namespace BNetAPI.Core
 {
     internal class BNetRestClient : IBNetRestClient
     {
