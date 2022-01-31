@@ -1,6 +1,8 @@
-﻿namespace BNetAPI.Core.Models
+﻿using BNetAPI.Core.Interfaces;
+
+namespace BNetAPI.Core.Models
 {
-    public class AuthorizationData
+    public class AuthorizationData : IAuthorizationData
     {
         public string ClientId { get; set; }
 

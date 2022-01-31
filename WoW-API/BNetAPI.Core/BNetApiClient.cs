@@ -1,10 +1,9 @@
 ﻿using BNetAPI.Core.Interfaces;
-using BNetAPI.Core.Models;
 using BNetAPI.Core.Utilities.Constants;
+using BNetAPI.Core.Models.ResponseModels;
 using Microsoft.Extensions.Caching.Memory;
 using System.Text;
 using System.Net.Http.Headers;
-using BNetAPI.Core.Models.ResponseModels;
 
 namespace BNetAPI.Core
 {
@@ -12,14 +11,16 @@ namespace BNetAPI.Core
     {
         private readonly IMemoryCache _cache;
         private readonly IBNetRestClient _restClient;
+        private readonly IAuthorizationData _authData;
 
-        public BNetApiClient(IMemoryCache cache, IBNetRestClient restClient)
+        public BNetApiClient(IMemoryCache cache, IBNetRestClient restClient, IAuthorizationData authData)
         {
             _cache = cache;
             _restClient = restClient;
+            _authData = authData;
         }
 
-        public async Task<string> FetchTokenAsync(AuthorizationData authData)
+        public async Task<string> FetchTokenAsync()
         {
             var token = string.Empty;
 
@@ -28,7 +29,7 @@ namespace BNetAPI.Core
                 using (var httpRequest = new HttpRequestMessage(HttpMethod.Post, Endpoints.BNetOauth))
                 {
                     var credentials = Convert.ToBase64String(
-                        Encoding.ASCII.GetBytes(string.Format(Formats.ColonSeparatedKVPFormat, authData.ClientId, authData.ClientSecret)));
+                        Encoding.ASCII.GetBytes(string.Format(Formats.ColonSeparatedKVPFormat, _authData.ClientId, _authData.ClientSecret)));
 
                     var data = new Dictionary<string, string>
                     {

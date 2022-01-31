@@ -1,6 +1,5 @@
 ﻿using BNetAPI.Core.Enums;
 using BNetAPI.Core.Interfaces;
-using BNetAPI.Core.Models;
 using BNetAPI.Core.Utilities.Constants;
 using BNetAPI.Guilds.Interfaces;
 using BNetAPI.Guilds.Models.RequestModels;
@@ -25,9 +24,9 @@ namespace BNetAPI.Guilds
             _restClient = restClient;
         }
 
-        public async Task<GuildResponse> RetrieveGuild(AuthorizationData authData, GuildRequestModel request)
+        public async Task<GuildResponse> RetrieveGuild(GuildRequestModel request)
         {
-            var token = await _apiClient.FetchTokenAsync(authData);
+            var token = await _apiClient.FetchTokenAsync();
             var endpoint = string.Format(Endpoints.Guild, request.Realm, request.GuildName);
 
             var builder = new UriBuilder(endpoint);
