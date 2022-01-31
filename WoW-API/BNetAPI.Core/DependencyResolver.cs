@@ -5,7 +5,7 @@ namespace BNetAPI.Core
 {
     public static class DependencyResolver
     {
-        public static void ConfigureBNetDependencies<TInterface, TConcrete>(this IServiceCollection services)
+        public static void ConfigureBNetDependencies(this IServiceCollection services)
         {
             services.AddTransient<IBNetApiClient, BNetApiClient>();
             services.AddTransient<IBNetRestClient, BNetRestClient>();
