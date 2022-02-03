@@ -24,7 +24,7 @@ namespace BNetAPI.Core
         {
             var token = string.Empty;
 
-            if (_cache.TryGetValue(AuthorizationConstants.AccessTokenName, out token))
+            if (!_cache.TryGetValue(AuthorizationConstants.AccessTokenName, out token))
             {
                 using (var httpRequest = new HttpRequestMessage(HttpMethod.Post, Endpoints.BNetOauth))
                 {

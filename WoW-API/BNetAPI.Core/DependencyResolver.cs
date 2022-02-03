@@ -12,16 +12,12 @@ namespace BNetAPI.Core
 
             var depRegistries = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(x => x.GetTypes())
-                .Where(x => typeof(IDependencyRegistry).IsAssignableFrom(x));
+                .Where(x => typeof(IDependencyRegistry).IsAssignableFrom(x)).Skip(1);
 
             foreach (var registry in depRegistries)
             {
-                var currentRegistry = registry as IDependencyRegistry;
-
-                if (currentRegistry != null)
-                {
-                    currentRegistry.RegisterDependencies(services);
-                }             
+                var currentRegistry = Activator.CreateInstance(registry) as IDependencyRegistry;
+                currentRegistry?.RegisterDependencies(services);
             }
         }
     }

@@ -32,8 +32,8 @@ namespace BNetAPI.Guilds
             var builder = new UriBuilder(endpoint);
             var query = HttpUtility.ParseQueryString(builder.Query);
 
-            query[BNetRequestHeaders.Namespace.ToString()] = request.NameSpace;
-            query[BNetRequestHeaders.Locale.ToString()] = request.Locale;
+            query[BNetRequestHeaders.Namespace.ToString().ToLower()] = request.NameSpace;
+            query[BNetRequestHeaders.Locale.ToString().ToLower()] = request.Locale;
 
             builder.Query = query.ToString();
             var url = builder.ToString();
