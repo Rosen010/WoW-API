@@ -22,6 +22,12 @@
             public const string RU = "ru_RU";
 
             public const string DE = "de_DE";
+
+            public const string US = "en_US";
+
+            public const string KR = "ko_KR";
+
+            public const string TW = "zh_TW";
         }
     }
 }
