@@ -24,7 +24,7 @@ namespace BNetAPI.Guilds
             _restClient = restClient;
         }
 
-        public async Task<GuildResponse> RetrieveGuild(GuildRequestModel request)
+        public async Task<GuildResponse> RequestGuild(GuildRequestModel request)
         {
             var token = await _apiClient.FetchTokenAsync();
             var endpoint = string.Format(Endpoints.Guild, request.Realm, request.GuildName);
@@ -43,6 +43,29 @@ namespace BNetAPI.Guilds
                 httpRequest.Headers.Authorization = new AuthenticationHeaderValue(ApiRequestConstants.AuthenticationType.Bearer, token);
 
                 var response = await _restClient.SendRequestAsync<GuildResponse>(httpRequest);
+                return response;
+            }
+        }
+
+        public async Task<RosterResponse> RequestRoster(RosterRequestModel request)
+        {
+            var token = await _apiClient.FetchTokenAsync();
+            var endpoint = string.Format(Endpoints.Roster, request.Realm, request.GuildName);
+
+            var builder = new UriBuilder(endpoint);
+            var query = HttpUtility.ParseQueryString(builder.Query);
+
+            query[BNetRequestHeaders.Namespace.ToString().ToLower()] = request.NameSpace;
+            query[BNetRequestHeaders.Locale.ToString().ToLower()] = request.Locale;
+
+            builder.Query = query.ToString();
+            var url = builder.ToString();
+
+            using (var httpRequest = new HttpRequestMessage(HttpMethod.Get, url))
+            {
+                httpRequest.Headers.Authorization = new AuthenticationHeaderValue(ApiRequestConstants.AuthenticationType.Bearer, token);
+
+                var response = await _restClient.SendRequestAsync<RosterResponse>(httpRequest);
                 return response;
             }
         }
