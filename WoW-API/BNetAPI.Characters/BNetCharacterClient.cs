@@ -43,5 +43,28 @@ namespace BNetAPI.Characters
                 return response;
             }
         }
+
+        public async Task<CharacterMediaResponse> RequestCharacterMedia(CharacterRequestModel request)
+        {
+            var token = await _apiClient.FetchTokenAsync();
+            var endpoint = string.Format(Endpoints.CharacterMedia, request.Realm, request.CharacterName);
+
+            var builder = new UriBuilder(endpoint);
+            var query = HttpUtility.ParseQueryString(builder.Query);
+
+            query[BNetRequestHeaders.Namespace.ToString().ToLower()] = request.NameSpace;
+            query[BNetRequestHeaders.Locale.ToString().ToLower()] = request.Locale;
+
+            builder.Query = query.ToString();
+            var url = builder.ToString();
+
+            using (var httpRequest = new HttpRequestMessage(HttpMethod.Get, url))
+            {
+                httpRequest.Headers.Authorization = new AuthenticationHeaderValue(ApiRequestConstants.AuthenticationType.Bearer, token);
+
+                var response = await _restClient.SendRequestAsync<CharacterMediaResponse>(httpRequest);
+                return response;
+            }
+        }
     }
 }
