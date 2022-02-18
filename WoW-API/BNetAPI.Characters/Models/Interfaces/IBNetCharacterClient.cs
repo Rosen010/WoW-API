@@ -5,8 +5,8 @@ namespace BNetAPI.Characters.Models.Interfaces
 {
     public interface IBNetCharacterClient
     {
-        Task<CharacterResponse> RequestCharacter(CharacterRequestModel request);
+        Task<CharacterResponse> RequestCharacterAsync(CharacterRequestModel request);
 
-        Task<CharacterMediaResponse> RequestCharacterMedia(CharacterRequestModel request);
+        Task<CharacterMediaResponse> RequestCharacterMediaAsync(CharacterRequestModel request);
     }
 }

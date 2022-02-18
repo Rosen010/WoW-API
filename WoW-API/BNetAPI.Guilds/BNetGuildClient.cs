@@ -24,7 +24,7 @@ namespace BNetAPI.Guilds
             _restClient = restClient;
         }
 
-        public async Task<GuildResponse> RequestGuild(GuildRequestModel request)
+        public async Task<GuildResponse> RequestGuildAsync(GuildRequestModel request)
         {
             var token = await _apiClient.FetchTokenAsync();
             var endpoint = string.Format(Endpoints.Guild, request.Realm, request.GuildName);
@@ -47,7 +47,7 @@ namespace BNetAPI.Guilds
             }
         }
 
-        public async Task<RosterResponse> RequestRoster(RosterRequestModel request)
+        public async Task<RosterResponse> RequestRosterAsync(RosterRequestModel request)
         {
             var token = await _apiClient.FetchTokenAsync();
             var endpoint = string.Format(Endpoints.Roster, request.Realm, request.GuildName);

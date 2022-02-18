@@ -6,8 +6,8 @@ namespace BNetAPI.Guilds.Interfaces
 {
     public interface IBNetGuildClient
     {
-        Task<GuildResponse> RequestGuild(GuildRequestModel request);
+        Task<GuildResponse> RequestGuildAsync(GuildRequestModel request);
 
-        Task<RosterResponse> RequestRoster(RosterRequestModel request);
+        Task<RosterResponse> RequestRosterAsync(RosterRequestModel request);
     }
 }

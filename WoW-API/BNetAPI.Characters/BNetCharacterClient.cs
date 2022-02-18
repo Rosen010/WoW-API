@@ -21,7 +21,7 @@ namespace BNetAPI.Characters
             _restClient = restClient;
         }
 
-        public async Task<CharacterResponse> RequestCharacter(CharacterRequestModel request)
+        public async Task<CharacterResponse> RequestCharacterAsync(CharacterRequestModel request)
         {
             var token = await _apiClient.FetchTokenAsync();
             var endpoint = string.Format(Endpoints.Character, request.Realm, request.CharacterName);
@@ -44,7 +44,7 @@ namespace BNetAPI.Characters
             }
         }
 
-        public async Task<CharacterMediaResponse> RequestCharacterMedia(CharacterRequestModel request)
+        public async Task<CharacterMediaResponse> RequestCharacterMediaAsync(CharacterRequestModel request)
         {
             var token = await _apiClient.FetchTokenAsync();
             var endpoint = string.Format(Endpoints.CharacterMedia, request.Realm, request.CharacterName);
