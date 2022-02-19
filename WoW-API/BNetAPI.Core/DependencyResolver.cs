@@ -1,4 +1,5 @@
-﻿using BNetAPI.Core.Interfaces;
+﻿using BNetAPI.Core.Helpers;
+using BNetAPI.Core.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BNetAPI.Core
@@ -9,6 +10,7 @@ namespace BNetAPI.Core
         {
             services.AddTransient<IBNetApiClient, BNetApiClient>();
             services.AddTransient<IBNetRestClient, BNetRestClient>();
+            services.AddTransient<IUrlHelper, UrlHelper>();
 
             var depRegistries = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(x => x.GetTypes())

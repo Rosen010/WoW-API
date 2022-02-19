@@ -4,7 +4,7 @@ using System.Web;
 
 namespace BNetAPI.Core.Helpers
 {
-    internal class UrlHelper
+    internal class UrlHelper : IUrlHelper
     {
         public string BuildBNetRequestUrl(string endpoint, IBNetRequestModel request)
         {
