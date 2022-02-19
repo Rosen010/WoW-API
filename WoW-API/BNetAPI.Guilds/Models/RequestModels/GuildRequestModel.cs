@@ -1,6 +1,8 @@
-﻿namespace BNetAPI.Guilds.Models.RequestModels
+﻿using BNetAPI.Core.Interfaces;
+
+namespace BNetAPI.Guilds.Models.RequestModels
 {
-    public class GuildRequestModel
+    public class GuildRequestModel : IBNetRequestModel
     {
         public string Realm { get; set; }
 

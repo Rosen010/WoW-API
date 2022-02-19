@@ -1,6 +1,8 @@
-﻿namespace BNetAPI.Guilds.Models.RequestModels
+﻿using BNetAPI.Core.Interfaces;
+
+namespace BNetAPI.Guilds.Models.RequestModels
 {
-    public class RosterRequestModel
+    public class RosterRequestModel : IBNetRequestModel
     {
         public string Region { get; set; }
 

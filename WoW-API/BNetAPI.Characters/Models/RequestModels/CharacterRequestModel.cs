@@ -1,6 +1,8 @@
-﻿namespace BNetAPI.Characters.Models.RequestModels
+﻿using BNetAPI.Core.Interfaces;
+
+namespace BNetAPI.Characters.Models.RequestModels
 {
-    public class CharacterRequestModel
+    public class CharacterRequestModel : IBNetRequestModel
     {
         public string Region { get; set; }
 

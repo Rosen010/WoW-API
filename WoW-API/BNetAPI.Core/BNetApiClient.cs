@@ -20,6 +20,18 @@ namespace BNetAPI.Core
             _authData = authData;
         }
 
+        public async Task<AuthenticationHeaderValue> AuthenticateAsync()
+        {
+            var token = await this.FetchTokenAsync();
+            
+            if (!string.IsNullOrEmpty(token))
+            {
+                return new AuthenticationHeaderValue(ApiRequestConstants.AuthenticationType.Bearer, token);
+            }
+
+            return null;
+        }
+
         public async Task<string> FetchTokenAsync()
         {
             var token = string.Empty;
