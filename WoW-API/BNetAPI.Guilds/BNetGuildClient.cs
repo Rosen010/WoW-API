@@ -1,73 +1,31 @@
-﻿using BNetAPI.Core.Enums;
-using BNetAPI.Core.Interfaces;
+﻿using BNetAPI.Core.Interfaces;
 using BNetAPI.Core.Utilities.Constants;
 using BNetAPI.Guilds.Interfaces;
 using BNetAPI.Guilds.Models.RequestModels;
 using BNetAPI.Guilds.Models.ResponseModels;
-using System;
-using System.Net.Http;
 using System.Threading.Tasks;
-using System.Net.Http.Headers;
-using System.Web;
 
 namespace BNetAPI.Guilds
 {
     internal class BNetGuildClient : IBNetGuildClient
     {
-        private readonly IBNetApiClient _apiClient;
-
         private readonly IBNetRestClient _restClient;
 
-        public BNetGuildClient(IBNetApiClient apiClient, IBNetRestClient restClient)
+        public BNetGuildClient(IBNetRestClient restClient)
         {
-            _apiClient = apiClient;
             _restClient = restClient;
         }
 
         public async Task<GuildResponse> RequestGuildAsync(GuildRequestModel request)
         {
-            var token = await _apiClient.FetchTokenAsync();
             var endpoint = string.Format(Endpoints.Guild, request.Realm, request.GuildName);
-
-            var builder = new UriBuilder(endpoint);
-            var query = HttpUtility.ParseQueryString(builder.Query);
-
-            query[BNetRequestHeaders.Namespace.ToString().ToLower()] = request.NameSpace;
-            query[BNetRequestHeaders.Locale.ToString().ToLower()] = request.Locale;
-
-            builder.Query = query.ToString();
-            var url = builder.ToString();
-
-            using (var httpRequest = new HttpRequestMessage(HttpMethod.Get, url))
-            {
-                httpRequest.Headers.Authorization = new AuthenticationHeaderValue(ApiRequestConstants.AuthenticationType.Bearer, token);
-
-                var response = await _restClient.SendRequestAsync<GuildResponse>(httpRequest);
-                return response;
-            }
+            return await _restClient.GetAsync<GuildResponse>(endpoint, request);
         }
 
         public async Task<RosterResponse> RequestRosterAsync(RosterRequestModel request)
         {
-            var token = await _apiClient.FetchTokenAsync();
             var endpoint = string.Format(Endpoints.Roster, request.Realm, request.GuildName);
-
-            var builder = new UriBuilder(endpoint);
-            var query = HttpUtility.ParseQueryString(builder.Query);
-
-            query[BNetRequestHeaders.Namespace.ToString().ToLower()] = request.NameSpace;
-            query[BNetRequestHeaders.Locale.ToString().ToLower()] = request.Locale;
-
-            builder.Query = query.ToString();
-            var url = builder.ToString();
-
-            using (var httpRequest = new HttpRequestMessage(HttpMethod.Get, url))
-            {
-                httpRequest.Headers.Authorization = new AuthenticationHeaderValue(ApiRequestConstants.AuthenticationType.Bearer, token);
-
-                var response = await _restClient.SendRequestAsync<RosterResponse>(httpRequest);
-                return response;
-            }
+            return await _restClient.GetAsync<RosterResponse>(endpoint, request);
         }
     }
 }
