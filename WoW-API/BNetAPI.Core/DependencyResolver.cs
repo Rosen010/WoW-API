@@ -8,7 +8,6 @@ namespace BNetAPI.Core
     {
         public static void ConfigureBNetDependencies(this IServiceCollection services)
         {
-            services.AddTransient<IBNetApiClient, BNetApiClient>();
             services.AddTransient<IBNetRestClient, BNetRestClient>();
             services.AddTransient<IUrlHelper, UrlHelper>();
 
