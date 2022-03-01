@@ -4,12 +4,12 @@
     {
         public const string BNetOauth = "https://us.battle.net/oauth/token";
 
-        public const string Guild = "https://eu.api.blizzard.com/data/wow/guild/{0}/{1}";
+        public const string Guild = "https://{0}.api.blizzard.com/data/wow/guild/{1}/{2}";
 
-        public const string Roster = "https://eu.api.blizzard.com/data/wow/guild/{0}/{1}/roster";
+        public const string Roster = "https://{0}.api.blizzard.com/data/wow/guild/{1}/{2}/roster";
 
-        public const string Character = "https://eu.api.blizzard.com/profile/wow/character/{0}/{1}";
+        public const string Character = "https://{0}.api.blizzard.com/profile/wow/character/{1}/{2}";
 
-        public const string CharacterMedia = "https://eu.api.blizzard.com/profile/wow/character/{0}/{1}/character-media";
+        public const string CharacterMedia = "https://{0}.api.blizzard.com/profile/wow/character/{1}/{2}/character-media";
     }
 }

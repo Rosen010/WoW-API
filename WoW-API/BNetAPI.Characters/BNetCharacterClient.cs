@@ -17,13 +17,13 @@ namespace BNetAPI.Characters
 
         public async Task<CharacterResponse> RequestCharacterAsync(CharacterRequestModel request)
         {
-            var endpoint = string.Format(Endpoints.Character, request.Realm, request.CharacterName);
+            var endpoint = string.Format(Endpoints.Character, request.Region, request.Realm, request.CharacterName);
             return await _restClient.GetAsync<CharacterResponse>(endpoint, request);
         }
 
         public async Task<CharacterMediaResponse> RequestCharacterMediaAsync(CharacterRequestModel request)
         {
-            var endpoint = string.Format(Endpoints.CharacterMedia, request.Realm, request.CharacterName);
+            var endpoint = string.Format(Endpoints.CharacterMedia, request.Region, request.Realm, request.CharacterName);
             return await _restClient.GetAsync<CharacterMediaResponse>(endpoint, request);
         }
     }
