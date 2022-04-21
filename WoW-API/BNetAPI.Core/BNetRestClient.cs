@@ -1,4 +1,5 @@
 ﻿using BNetAPI.Core.Interfaces;
+using BNetAPI.Core.Models;
 using BNetAPI.Core.Models.ResponseModels;
 using BNetAPI.Core.Utilities.Constants;
 using Microsoft.Extensions.Caching.Memory;
@@ -23,7 +24,8 @@ namespace BNetAPI.Core
             _authData = authData;
         }
 
-        public async Task<TResponse> GetAsync<TResponse>(string endpoint, IBNetRequestModel request)
+        public async Task<TResponse> GetAsync<TResponse>(string endpoint, IBNetRequestModel request) 
+            where TResponse : IBaseResponse
         {
             var url = _urlHelper.BuildBNetRequestUrl(endpoint, request);
 
@@ -36,7 +38,8 @@ namespace BNetAPI.Core
             }
         }
 
-        public async Task<TResponse> SendRequestAsync<TResponse>(HttpRequestMessage requestMessage)
+        public async Task<TResponse> SendRequestAsync<TResponse>(HttpRequestMessage requestMessage) 
+            where TResponse : IBaseResponse
         {
             var client = _clientFactory.CreateClient();
 
@@ -44,6 +47,7 @@ namespace BNetAPI.Core
             {
                 var json = await httpResponse.Content.ReadAsStringAsync();
                 var response = JsonConvert.DeserializeObject<TResponse>(json);
+                response.StatusCode = httpResponse.StatusCode;
 
                 return response;
             }

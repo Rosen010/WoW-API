@@ -1,9 +1,13 @@
 ﻿using BNetAPI.Characters.Models.ResponseModels.ResponseComponents;
+using BNetAPI.Core.Models;
+
 using Newtonsoft.Json;
+
+using System.Net;
 
 namespace BNetAPI.Characters.Models.ResponseModels
 {
-    public class CharacterResponse
+    public class CharacterResponse : IBaseResponse
     {
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -31,5 +35,7 @@ namespace BNetAPI.Characters.Models.ResponseModels
         
         [JsonProperty("equipped_item_level")]
         public int EquippedItemLevel { get; set; }
+
+        public HttpStatusCode StatusCode { get; set; }
     }
 }

@@ -1,9 +1,13 @@
-﻿using BNetAPI.Guilds.Models.ResponseModels.ResponseComponents;
+﻿using BNetAPI.Core.Models;
+using BNetAPI.Guilds.Models.ResponseModels.ResponseComponents;
+
 using Newtonsoft.Json;
+
+using System.Net;
 
 namespace BNetAPI.Guilds.Models.ResponseModels
 {
-    public class GuildResponse
+    public class GuildResponse : IBaseResponse
     {
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -19,5 +23,7 @@ namespace BNetAPI.Guilds.Models.ResponseModels
 
         [JsonProperty("created_timestamp")]
         public long CreatedOn { get; set; }
+
+        public HttpStatusCode StatusCode { get; set; }
     }
 }
