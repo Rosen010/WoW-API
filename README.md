@@ -1,2 +1,2 @@
 # WoW-API
-World of Warcraft API that can be easily integrated into any .NET app.
+.NET library that provides ready to use functionality from the World of Warcraft API
