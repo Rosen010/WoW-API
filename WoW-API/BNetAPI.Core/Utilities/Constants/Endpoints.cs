@@ -4,6 +4,10 @@
     {
         public const string BNetOauth = "https://us.battle.net/oauth/token";
 
+        public const string UserAuthorization = "https://oauth.battle.net/authorize";
+
+        public const string TokenAuthorization = "https://oauth.battle.net/token";
+
         public const string Guild = "https://{0}.api.blizzard.com/data/wow/guild/{1}/{2}";
 
         public const string Roster = "https://{0}.api.blizzard.com/data/wow/guild/{1}/{2}/roster";
