@@ -38,6 +38,19 @@ namespace BNetAPI.Core
             }
         }
 
+        public async Task<TResponse> GetAsync<TResponse>(string endpoint, IDictionary<string, string> data)
+            where TResponse : IBaseResponse
+        {
+            using (var httpRequest = new HttpRequestMessage(HttpMethod.Get, endpoint))
+            {
+                httpRequest.Headers.Authorization = await this.AuthenticateAsync();
+                httpRequest.Content = new FormUrlEncodedContent(data);
+
+                var response = await this.SendRequestAsync<TResponse>(httpRequest);
+                return response;
+            }
+        }
+
         public async Task<TResponse> SendRequestAsync<TResponse>(HttpRequestMessage requestMessage) 
             where TResponse : IBaseResponse
         {
@@ -59,7 +72,7 @@ namespace BNetAPI.Core
 
             if (!string.IsNullOrEmpty(token))
             {
-                return new AuthenticationHeaderValue(ApiRequestConstants.AuthenticationType.Bearer, token);
+                return new AuthenticationHeaderValue(RequestConstants.AuthenticationType.Bearer, token);
             }
 
             return null;
@@ -78,10 +91,10 @@ namespace BNetAPI.Core
 
                     var data = new Dictionary<string, string>
                     {
-                        { ApiRequestConstants.Headers.GrantType, ApiRequestConstants.GrantTypes.ClientCredentials },
+                        { RequestConstants.Parameters.GrantType, RequestConstants.GrantTypes.ClientCredentials },
                     };
 
-                    httpRequest.Headers.Authorization = new AuthenticationHeaderValue(ApiRequestConstants.AuthenticationType.Basic, credentials);
+                    httpRequest.Headers.Authorization = new AuthenticationHeaderValue(RequestConstants.AuthenticationType.Basic, credentials);
                     httpRequest.Content = new FormUrlEncodedContent(data);
 
                     var response = await this.SendRequestAsync<BNetBearerTokenResponse>(httpRequest);

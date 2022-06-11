@@ -11,11 +11,12 @@ namespace BNetAPI.Core
             services.AddTransient<IBNetRestClient, BNetRestClient>();
             services.AddTransient<IUrlHelper, UrlHelper>();
 
-            var depRegistries = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(x => x.GetTypes())
-                .Where(x => typeof(IDependencyRegistry).IsAssignableFrom(x)).Skip(1);
+            var depRegistries = AppDomain.CurrentDomain.GetAssemblies();
 
-            foreach (var registry in depRegistries)
+            var types = depRegistries.SelectMany(x => x.GetTypes());
+            var depRegistries2 = types.Where(x => typeof(IDependencyRegistry).IsAssignableFrom(x)).Skip(1);
+
+            foreach (var registry in depRegistries2)
             {
                 var currentRegistry = Activator.CreateInstance(registry) as IDependencyRegistry;
                 currentRegistry?.RegisterDependencies(services);

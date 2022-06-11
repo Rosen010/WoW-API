@@ -7,6 +7,9 @@ namespace BNetAPI.Core.Interfaces
         Task<TResponse> GetAsync<TResponse>(string endpoint, IBNetRequestModel request)
             where TResponse : IBaseResponse;
 
+        Task<TResponse> GetAsync<TResponse>(string endpoint, IDictionary<string, string> data)
+            where TResponse : IBaseResponse;
+
         Task<TResponse> SendRequestAsync<TResponse>(HttpRequestMessage requestMessage)
             where TResponse : IBaseResponse;
     }

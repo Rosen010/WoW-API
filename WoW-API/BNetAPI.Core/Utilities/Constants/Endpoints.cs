@@ -2,9 +2,9 @@
 {
     public static class Endpoints
     {
-        public const string BNetOauth = "https://us.battle.net/oauth/token";
+        public const string BNetOauth = "https://{0}.battle.net/oauth/token";
 
-        public const string UserAuthorization = "https://oauth.battle.net/authorize";
+        public const string UserAuthentication = "https://oauth.battle.net/authorize";
 
         public const string TokenAuthorization = "https://oauth.battle.net/token";
 
