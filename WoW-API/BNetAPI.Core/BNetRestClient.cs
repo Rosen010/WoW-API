@@ -38,19 +38,6 @@ namespace BNetAPI.Core
             }
         }
 
-        public async Task<TResponse> GetAsync<TResponse>(string endpoint, IDictionary<string, string> data)
-            where TResponse : IBaseResponse
-        {
-            using (var httpRequest = new HttpRequestMessage(HttpMethod.Get, endpoint))
-            {
-                //httpRequest.Headers.Authorization = await this.AuthenticateAsync();
-                httpRequest.Content = new FormUrlEncodedContent(data);
-
-                var response = await this.SendRequestAsync<TResponse>(httpRequest);
-                return response;
-            }
-        }
-
         public async Task<TResponse> SendRequestAsync<TResponse>(HttpRequestMessage requestMessage) 
             where TResponse : IBaseResponse
         {

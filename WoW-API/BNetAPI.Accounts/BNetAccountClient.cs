@@ -3,6 +3,8 @@ using BNetAPI.Accounts.Models.RequestModels;
 using BNetAPI.Accounts.Models.ResponseModels;
 using BNetAPI.Core.Interfaces;
 using BNetAPI.Core.Utilities.Constants;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Web;
 
 namespace BNetAPI.Accounts
 {
@@ -17,23 +19,21 @@ namespace BNetAPI.Accounts
             _restClient = restClient;
         }
 
-        public async Task AuthenticateUser(AuthenticationRequestModel requestModel)
+        public string GetAuthenticationUrl()
         {
-            var endpoint = string.Format(Endpoints.UserAuthentication, requestModel?.Region);
+            var endpoint = Endpoints.UserAuthentication;
 
-            if (requestModel != null)
-            {
-                var requestData = new Dictionary<string, string>
+            var requestData = new Dictionary<string, string>
                 {
                     { RequestConstants.Parameters.ClientId, _authData.ClientId },
                     { RequestConstants.Parameters.Scope, RequestConstants.Scopes.WoWProfile },
-                    { RequestConstants.Parameters.State, requestModel.State },
-                    { RequestConstants.Parameters.RedirectUri, "http://localhost:44379" },
+                    { RequestConstants.Parameters.State, RequestConstants.StateValue },
+                    { RequestConstants.Parameters.RedirectUri, "https://localhost:44379/profile/User/Info" },
                     { RequestConstants.Parameters.ResponseType, RequestConstants.ResponseTypes.Code },
                 };
 
-                await _restClient.GetAsync<AuthenticationResponse>(endpoint, requestData);
-            }
+            var url = new Uri(QueryHelpers.AddQueryString(endpoint, requestData)).ToString();
+            return url;
         }
     }
 }
