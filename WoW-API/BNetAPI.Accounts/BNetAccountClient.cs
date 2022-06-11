@@ -21,16 +21,19 @@ namespace BNetAPI.Accounts
         {
             var endpoint = string.Format(Endpoints.UserAuthentication, requestModel?.Region);
 
-            var requestData = new Dictionary<string, string>
+            if (requestModel != null)
             {
-                { RequestConstants.Parameters.ClientId, _authData.ClientId },
-                { RequestConstants.Parameters.Scope, RequestConstants.Scopes.WoWProfile },
-                { RequestConstants.Parameters.State, requestModel?.State },
-                { RequestConstants.Parameters.RedirectUri, "http://localhost:44379" },
-                { RequestConstants.Parameters.ResponseType, RequestConstants.ResponseTypes.Code },
-            };
+                var requestData = new Dictionary<string, string>
+                {
+                    { RequestConstants.Parameters.ClientId, _authData.ClientId },
+                    { RequestConstants.Parameters.Scope, RequestConstants.Scopes.WoWProfile },
+                    { RequestConstants.Parameters.State, requestModel.State },
+                    { RequestConstants.Parameters.RedirectUri, "http://localhost:44379" },
+                    { RequestConstants.Parameters.ResponseType, RequestConstants.ResponseTypes.Code },
+                };
 
-            await _restClient.GetAsync<AuthenticationResponse>(endpoint, requestData);
+                await _restClient.GetAsync<AuthenticationResponse>(endpoint, requestData);
+            }
         }
     }
 }

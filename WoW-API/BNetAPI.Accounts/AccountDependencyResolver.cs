@@ -1,12 +1,11 @@
 ﻿using BNetAPI.Accounts.Interfaces;
-using BNetAPI.Core.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BNetAPI.Accounts
 {
-    public class AccountDependencyResolver : IDependencyRegistry
+    public static class AccountDependencyResolver
     {
-        public void RegisterDependencies(IServiceCollection services)
+        public static void AddBNetAccounts(this IServiceCollection services)
         {
             services.AddTransient<IBNetAccountClient, BNetAccountClient>();
         }

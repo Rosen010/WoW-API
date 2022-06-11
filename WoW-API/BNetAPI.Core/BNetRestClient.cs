@@ -43,7 +43,7 @@ namespace BNetAPI.Core
         {
             using (var httpRequest = new HttpRequestMessage(HttpMethod.Get, endpoint))
             {
-                httpRequest.Headers.Authorization = await this.AuthenticateAsync();
+                //httpRequest.Headers.Authorization = await this.AuthenticateAsync();
                 httpRequest.Content = new FormUrlEncodedContent(data);
 
                 var response = await this.SendRequestAsync<TResponse>(httpRequest);
