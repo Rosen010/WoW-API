@@ -24,7 +24,7 @@ namespace BNetAPI.Core
             _authData = authData;
         }
 
-        public async Task<TResponse> GetAsync<TResponse>(string endpoint, IBNetRequestModel request) 
+        public async Task<TResponse> GetFromBlizzardApiAsync<TResponse>(string endpoint, IBNetRequestModel request)
             where TResponse : IBaseResponse
         {
             var url = _urlHelper.BuildBNetRequestUrl(endpoint, request);
@@ -38,7 +38,23 @@ namespace BNetAPI.Core
             }
         }
 
-        public async Task<TResponse> SendRequestAsync<TResponse>(HttpRequestMessage requestMessage) 
+        public async Task<TResponse> PostToBlizzardApiAsync<TResponse>(string url, IDictionary<string, string> data)
+            where TResponse : IBaseResponse
+        {
+            using (var httpRequest = new HttpRequestMessage(HttpMethod.Post, url))
+            {
+                var credentials = Convert.ToBase64String(
+                       Encoding.ASCII.GetBytes(string.Format(Formats.ColonSeparatedKVPFormat, _authData.ClientId, _authData.ClientSecret)));
+
+                httpRequest.Headers.Authorization = new AuthenticationHeaderValue(RequestConstants.AuthenticationType.Basic, credentials);
+                httpRequest.Content = new FormUrlEncodedContent(data);
+
+                var response = await this.SendRequestAsync<TResponse>(httpRequest);
+                return response;
+            }
+        }
+
+        public async Task<TResponse> SendRequestAsync<TResponse>(HttpRequestMessage requestMessage)
             where TResponse : IBaseResponse
         {
             var client = _clientFactory.CreateClient();
@@ -71,24 +87,14 @@ namespace BNetAPI.Core
 
             if (!_cache.TryGetValue(AuthorizationConstants.AccessTokenName, out token))
             {
-                using (var httpRequest = new HttpRequestMessage(HttpMethod.Post, Endpoints.BNetOauth))
+                var data = new Dictionary<string, string>
                 {
-                    var credentials = Convert.ToBase64String(
-                        Encoding.ASCII.GetBytes(string.Format(Formats.ColonSeparatedKVPFormat, _authData.ClientId, _authData.ClientSecret)));
+                    { RequestConstants.Parameters.GrantType, RequestConstants.GrantTypes.ClientCredentials },
+                };
 
-                    var data = new Dictionary<string, string>
-                    {
-                        { RequestConstants.Parameters.GrantType, RequestConstants.GrantTypes.ClientCredentials },
-                    };
-
-                    httpRequest.Headers.Authorization = new AuthenticationHeaderValue(RequestConstants.AuthenticationType.Basic, credentials);
-                    httpRequest.Content = new FormUrlEncodedContent(data);
-
-                    var response = await this.SendRequestAsync<BNetBearerTokenResponse>(httpRequest);
-                    this.CacheToken(response);
-
-                    token = response.AccessToken;
-                }
+                var response = await this.PostToBlizzardApiAsync<BNetBearerTokenResponse>(Endpoints.BNetOauth, data);
+                token = response.AccessToken;
+                this.CacheToken(response);
             }
 
             return token;

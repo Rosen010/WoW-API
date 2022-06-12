@@ -24,16 +24,18 @@ namespace BNetAPI.Accounts
             var endpoint = Endpoints.UserAuthentication;
 
             var requestData = new Dictionary<string, string>
-                {
-                    { RequestConstants.Parameters.ClientId, _authData.ClientId },
-                    { RequestConstants.Parameters.Scope, RequestConstants.Scopes.WoWProfile },
-                    { RequestConstants.Parameters.State, RequestConstants.StateValue },
-                    { RequestConstants.Parameters.RedirectUri, "https://localhost:44379/profile/User/Info" },
-                    { RequestConstants.Parameters.ResponseType, RequestConstants.ResponseTypes.Code },
-                };
+            {
+                { RequestConstants.Parameters.ClientId, _authData.ClientId },
+                { RequestConstants.Parameters.Scope, RequestConstants.Scopes.WoWProfile },
+                { RequestConstants.Parameters.State, RequestConstants.StateValue },
+                { RequestConstants.Parameters.RedirectUri, "https://localhost:44379/profile/User/Info" },
+                { RequestConstants.Parameters.ResponseType, RequestConstants.ResponseTypes.Code },
+            };
 
             var url = new Uri(QueryHelpers.AddQueryString(endpoint, requestData)).ToString();
             return url;
         }
+
+
     }
 }

@@ -4,7 +4,10 @@ namespace BNetAPI.Core.Interfaces
 {
     public interface IBNetRestClient
     {
-        Task<TResponse> GetAsync<TResponse>(string endpoint, IBNetRequestModel request)
+        Task<TResponse> GetFromBlizzardApiAsync<TResponse>(string endpoint, IBNetRequestModel request)
+            where TResponse : IBaseResponse;
+
+        Task<TResponse> PostToBlizzardApiAsync<TResponse>(string url, IDictionary<string, string> data)
             where TResponse : IBaseResponse;
 
         Task<TResponse> SendRequestAsync<TResponse>(HttpRequestMessage requestMessage)

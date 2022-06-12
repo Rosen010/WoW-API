@@ -19,13 +19,13 @@ namespace BNetAPI.Guilds
         public async Task<GuildResponse> RequestGuildAsync(GuildRequestModel request)
         {
             var endpoint = string.Format(Endpoints.Guild, request.Region, request.Realm, request.GuildName);
-            return await _restClient.GetAsync<GuildResponse>(endpoint, request);
+            return await _restClient.GetFromBlizzardApiAsync<GuildResponse>(endpoint, request);
         }
 
         public async Task<RosterResponse> RequestRosterAsync(RosterRequestModel request)
         {
             var endpoint = string.Format(Endpoints.Roster, request.Region, request.Realm, request.GuildName);
-            return await _restClient.GetAsync<RosterResponse>(endpoint, request);
+            return await _restClient.GetFromBlizzardApiAsync<RosterResponse>(endpoint, request);
         }
     }
 }
