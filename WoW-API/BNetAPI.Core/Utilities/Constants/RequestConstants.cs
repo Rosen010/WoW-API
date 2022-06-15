@@ -19,6 +19,8 @@
             public const string ResponseType = "response_type";
 
             public const string Scope = "scope";
+
+            public const string Code = "code";
         }
 
         public static class HeaderValues
@@ -38,6 +40,8 @@
             public const string ClientCredentials = "client_credentials";
 
             public const string Password = "password";
+
+            public const string AuthorizationCode = "authorization_code";
         }
 
         public static class Scopes

@@ -1,10 +1,8 @@
 ﻿using BNetAPI.Accounts.Interfaces;
-using BNetAPI.Accounts.Models.RequestModels;
 using BNetAPI.Accounts.Models.ResponseModels;
 using BNetAPI.Core.Interfaces;
 using BNetAPI.Core.Utilities.Constants;
 using Microsoft.AspNetCore.WebUtilities;
-using System.Web;
 
 namespace BNetAPI.Accounts
 {
@@ -36,6 +34,20 @@ namespace BNetAPI.Accounts
             return url;
         }
 
+        public async Task<string> GetUserAccessTokenAsync(string code)
+        {
+            var endpoint = Endpoints.TokenAuthorization;
 
+            var requestData = new Dictionary<string, string>
+            {
+                { RequestConstants.Parameters.RedirectUri, "https://localhost:44379/profile/User/Info" },
+                { RequestConstants.Parameters.Scope, RequestConstants.Scopes.WoWProfile },
+                { RequestConstants.Parameters.GrantType, RequestConstants.GrantTypes.AuthorizationCode },
+                { RequestConstants.Parameters.Code, code },
+            };
+
+            var response = await _restClient.PostToBlizzardApiAsync<AuthTokenResponse>(endpoint, requestData);
+            return response?.AccessToken;
+        }
     }
 }
