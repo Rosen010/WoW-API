@@ -15,5 +15,7 @@
         public const string Character = "https://{0}.api.blizzard.com/profile/wow/character/{1}/{2}";
 
         public const string CharacterMedia = "https://{0}.api.blizzard.com/profile/wow/character/{1}/{2}/character-media";
+
+        public const string WoWProfile = "https://{0}.api.blizzard.com/profile/user/wow";
     }
 }
