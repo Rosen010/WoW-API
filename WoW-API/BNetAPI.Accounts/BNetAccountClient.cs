@@ -1,4 +1,5 @@
 ﻿using BNetAPI.Accounts.Interfaces;
+using BNetAPI.Accounts.Models.RequestModels;
 using BNetAPI.Accounts.Models.ResponseModels;
 using BNetAPI.Core.Interfaces;
 using BNetAPI.Core.Utilities.Constants;
@@ -34,7 +35,7 @@ namespace BNetAPI.Accounts
             return url;
         }
 
-        public async Task<string> GetUserAccessTokenAsync(string code)
+        public async Task<string?> GetUserAccessTokenAsync(string code)
         {
             var endpoint = Endpoints.TokenAuthorization;
 
@@ -48,6 +49,18 @@ namespace BNetAPI.Accounts
 
             var response = await _restClient.PostToBlizzardApiAsync<AuthTokenResponse>(endpoint, requestData);
             return response?.AccessToken;
+        }
+
+        public async Task<AccountInfoResponse> GetUserAccountInfo(string token)
+        {
+            var endpoint = string.Format(Endpoints.WoWProfile, "eu");
+            var requestModel = new AccountRequestModel();
+
+            requestModel.NameSpace = "profile-eu";
+            requestModel.Locale = "en_GB";
+
+            var response = await _restClient.GetFromBlizzardApiAsync<AccountInfoResponse>(endpoint, requestModel, token);
+            return response;
         }
     }
 }

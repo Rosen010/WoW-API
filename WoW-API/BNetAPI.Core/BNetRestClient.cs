@@ -24,14 +24,14 @@ namespace BNetAPI.Core
             _authData = authData;
         }
 
-        public async Task<TResponse> GetFromBlizzardApiAsync<TResponse>(string endpoint, IBNetRequestModel request)
+        public async Task<TResponse> GetFromBlizzardApiAsync<TResponse>(string endpoint, IBNetRequestModel request, string? token = null)
             where TResponse : IBaseResponse
         {
             var url = _urlHelper.BuildBNetRequestUrl(endpoint, request);
 
             using (var httpRequest = new HttpRequestMessage(HttpMethod.Get, url))
             {
-                httpRequest.Headers.Authorization = await this.AuthenticateAsync();
+                httpRequest.Headers.Authorization = await this.AuthenticateAsync(token);
 
                 var response = await this.SendRequestAsync<TResponse>(httpRequest);
                 return response;
@@ -69,9 +69,9 @@ namespace BNetAPI.Core
             }
         }
 
-        private async Task<AuthenticationHeaderValue> AuthenticateAsync()
+        private async Task<AuthenticationHeaderValue> AuthenticateAsync(string? token = null)
         {
-            var token = await this.FetchTokenAsync();
+            token = string.IsNullOrEmpty(token) ? await this.FetchTokenAsync() : token;
 
             if (!string.IsNullOrEmpty(token))
             {
